@@ -24,6 +24,7 @@ COPY ./package.json /app/
 # lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size
 RUN \
     set -ex && \
+    corepack enable pnpm && \
     export PUPPETEER_SKIP_DOWNLOAD=true && \
     pnpm install --frozen-lockfile && \
     pnpm rb
@@ -68,6 +69,7 @@ COPY --from=dep-builder /app /app
 
 RUN \
     set -ex && \
+    corepack enable pnpm && \
     # cp /app/scripts/docker/minify-docker.js /minifier/ && \
     # export PROJECT_ROOT=/app && \
     # node /minifier/minify-docker.js && \
